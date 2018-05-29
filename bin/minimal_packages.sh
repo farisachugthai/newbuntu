@@ -6,7 +6,7 @@
 # In addition, get the newest versions of each package.
 
 
-if (( $EUID != 0 )); then
+if (( "$EUID" != 0 )); then
     echo "Please run as root"
     exit
 fi

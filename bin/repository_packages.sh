@@ -2,26 +2,27 @@
 # Assumes Ubuntu
 # Maintainer: Faris Chugthai
 
-bash "minimal_ubuntu_install.sh"
+sudo apt-get update || exit
 
-a="apt-get install -y"
+# TODO: There need to be a way to call the package name after this command and add || exit && print("[package name] is not available") or something
+a="sudo apt-get install -y"
 
 # Security and Administration. OpenSSH and gufw are installed by minimal.
 $a apt-transport-https
 $a apt-transport-tor
 $a autossh
-$a avahi-discover
+$a avahi-discover               # with Avahi Browser. very simple zeroconf tool
 $a bleachbit
-$a gnupg gnupg-doc
+$a gnupg
 $a gnupg2
-$a keepassxc		# So KeePassXC is in the official 18.04 repos which I'm crazy excited about. Check the OS version
+$a keepassxc		# Need to check that we're using 18.04
+$a software-properties-common   # Should've been called already but in case
 $a xdotool
 
 
 # Help on the command-line. Vim and Git are installed from minimal.
 $a bash-completion
-$a file
-$a fzf      		# Not in the Ubuntu repos. Needs a git install.
+# $a fzf      		# Not in the Ubuntu repos but we can install in the init.vim.
 $a htop			# Interestingly now a snap
 $a ncdu
 $a ntfs-3g
@@ -41,13 +42,13 @@ $a hfsutils
 $a id-utils
 $a poppler-utils
 $a sensible-utils
-$a xzutils
+# $a xz-utils
 
 
 # Docs
 $a freebsd-manpages
-$a info
-$a manpages         # apt list --manual-installed has THIS here?
+# $a info
+$a manpages
 $a manpages-posix
 $a manpages-posix-dev
 $a texinfo
@@ -58,13 +59,12 @@ $a byobu
 # $a i3wm		# alrady installed just nervous about setup
 $a rxvt-unicode-256color
 $a tmux
-$a yakuake          # love the dropdown. move to kde specific.
 
 
-#For development
+#For development. Python and JavaScript have their own files.
 $a adb
 $a clang
-$a easy-git         # its difficult software guys
+$a easygit         # its difficult software guys
 $a exuberant-ctags
 $a gdb
 $a git-hub              # go get i think
@@ -75,7 +75,7 @@ $a chromium-browser
 $a chromium-browser-l10n
 $a chromium-chromedriver
 $a chromium-codecs-ffmpeg-extra
-# $a curl		# already installed
+$a curl
 $a deluge
 $a network-manager
 $a sockstat         # gotta thank the BSD boys
@@ -110,33 +110,35 @@ f="$a fonts"
 
 # DE Specific [is definitely gonna end up it's own file soon enough]
 # if GNOME
-$a gparted
-$a grsync
-$a gdebi
-$a synaptic		# Move to a gtk focused script along with gparted. kde has partitionmanager and qapt
+# $a gparted
+# $a grsync
+# $a gdebi
+# $a synaptic		# Move to a gtk focused script along with gparted. kde has partitionmanager and qapt
 
 # Fix bash's proclivity for global variables
 unset a f
 
-function opt-pkg()
-{
-    local instl=`bash "ubuntu-packages/$0"`
-    echo "Now we'll be installing $0"
-}
-
-
-# Add Spotify
-opt-pkg "spotify.sh"
-
-
-# Neofetch for Ubuntu 16.10 >
-# Neofetch 17.04 < has Neofetch in the repos
-opt-pkg "neofetch.sh"
-
-# Group all the stuff that requires a specific CPU arch together
-if [[ `uname -m == x86_64` ]]; then
-    opt-pkg "vs-code.sh"
-fi
+# gotta love vim. :119,137s/^/#/gc
+# commented it out until i have the rest of the script tested and down pat
+#function opt-pkg()
+#{
+#    local instl=`bash "ubuntu-packages/$0"`
+#    echo "Now we'll be installing $0"
+#}
+#
+#
+## Add Spotify
+#opt-pkg "spotify.sh"
+#
+#
+## Neofetch for Ubuntu 16.10 >
+## Neofetch 17.04 < has Neofetch in the repos
+#opt-pkg "neofetch.sh"
+#
+## Group all the stuff that requires a specific CPU arch together
+#if [[ `uname -m == x86_64` ]]; then
+#    opt-pkg "vs-code.sh"
+#fi
 
 # add docker, atom, ffnightly, virtualbox, gitter, dropbox, powershell, signal-desktop, skypeforlinux, tails-installer
 
@@ -159,6 +161,7 @@ sudo snap install --channel=edge shellcheck        # should test a little more
 # but i wouldn't want vscode from a snap. actually i shouldn't even get it from my own script i need to get it from miniconda fuck.
 
 
+# doesn't recognize the function defined below.
 if ask "Would you like to install optional KDE-specific software?" N; then
     bash "ubuntu-packages/kde-specific.sh"
 fi

@@ -11,17 +11,18 @@ sudo apt-get update && sudo apt-get install -y npm
 sudo npm i -g npm
 
 # Wow npm setup is such a pain
-sudo chown -R $USER:"$(id -g)" "$HOME/.config/configstore"
+sudo chown -R "$USER:$(id -g)" "$HOME/.config/configstore"
 chmod 755 "$HOME/.config/configstore"
 
 # I did this just to have a spot to experiment
-mkdir "$HOME/npm_experiments" && cd "$HOME/npm_experiments"
+mkdir "$HOME/npm_experiments" && cd "$HOME/npm_experiments" || return
 npm init;
 # i wonder if bash is gonna keep running other commands while that's running lol
 
-
 # Get some npm packages I like.
-
+# TODO: I need to change what directory npm installs modules to because it's crazy annoying that
+# I either have to sudo install node_modules or make /usr/local/lib world writable.
+# could do something similar to what python does with ~/.local/{bin,local,share}
 n="npm install -g"
 
 $n neovim
@@ -29,5 +30,9 @@ $n neovim
 # $n proselint
 
 unset n
+
+# Alternatively you could run
+# `conda install yarn`
+# Don't know how I didn't realize that was a choice.
 
 exit 0
