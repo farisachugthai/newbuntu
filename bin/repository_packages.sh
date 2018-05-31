@@ -92,6 +92,7 @@ $a chromium-chromedriver
 $a chromium-codecs-ffmpeg-extra
 $a chromium-ublock-orign                # well that's nice
 $a curl
+$a ddgr                                 # DuckDuckGo has an app in the repos console only :D
 $a deluge
 $a network-manager
 $a sockstat                             # gotta thank the BSD boys
@@ -103,6 +104,7 @@ $a w3m
 # Packages that aren't necessary at all but fun and/or convenient.
 $a audacity
 $a cherrytree
+$a cmatrix
 $a cowsay
 $a fortune
 $a gimp
