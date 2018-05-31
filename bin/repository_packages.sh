@@ -8,6 +8,7 @@ sudo apt-get update || exit
 a="sudo apt-get install -y"
 
 # Security and Administration. OpenSSH and gufw are installed by minimal.
+$a aircrack-ng
 $a apt-transport-https
 $a apt-transport-tor
 $a autossh
@@ -15,9 +16,16 @@ $a avahi-discover               # with Avahi Browser. very simple zeroconf tool
 $a bleachbit
 $a gnupg
 $a gnupg2
-$a keepassxc		# Need to check that we're using 18.04
+$a keepassxc		            # Need to check that we're using 18.04
+$a lm-sensors                   # Nobody likes melted CPUs!
 $a software-properties-common   # Should've been called already but in case
+$a tcpdump
+$a traceroute
+$a vagrant                      # still need to learn
+$a wireshark
+$a whois
 $a xdotool
+$a zenmap
 
 
 # Help on the command-line. Vim and Git are installed from minimal.
@@ -27,6 +35,7 @@ $a htop			# Interestingly now a snap
 $a ncdu
 $a ntfs-3g
 # $a rclone   # Not in repo. go get?
+# $a qemu           # be prepared for a metapackage when you run this
 $a tree
 $a virt-manager
 $a xclip
@@ -36,7 +45,7 @@ $a xsel
 # Utilities
 $a dnsutils
 $a findutils
-$a hfsutils
+$a hfsplus
 $a hfsprogs
 $a hfsutils
 $a id-utils
@@ -51,17 +60,23 @@ $a freebsd-manpages
 $a manpages
 $a manpages-posix
 $a manpages-posix-dev
+$a pandoc
+$a python3-examples
+$a python3.6-examples
+$a python3.7-examples               # yes it's officially here
 $a texinfo
 
 
 # Terminal specific
 $a byobu
-# $a i3wm		# alrady installed just nervous about setup
+$a dvtm
+$a i3wm
 $a rxvt-unicode-256color
+$a termit
 $a tmux
 
 
-#For development. Python and JavaScript have their own files.
+# For development. Python and JavaScript have their own files.
 $a adb
 $a clang
 $a easygit         # its difficult software guys
@@ -75,49 +90,50 @@ $a chromium-browser
 $a chromium-browser-l10n
 $a chromium-chromedriver
 $a chromium-codecs-ffmpeg-extra
+$a chromium-ublock-orign                # well that's nice
 $a curl
 $a deluge
 $a network-manager
-$a sockstat         # gotta thank the BSD boys
+$a sockstat                             # gotta thank the BSD boys
 $a torbrowser-launcher
 $a w3m
-# $a wget		# already installed
-$a wpasupplicant
+# $a wget		                        # already installed
+# $a wpasupplicant                      # not utilized 
 
 # Packages that aren't necessary at all but fun and/or convenient.
+$a audacity
 $a cherrytree
 $a cowsay
 $a fortune
+$a gimp
 $a mpd
 $a ncmpcpp
-# $a neofetch         # PPA but script already provided.
+# $a neofetch                           # PPA but script already provided.
 $a octicons
 $a onionshare
 $a sl 
 $a screenfetch
 $a vlc
 $a weechat
-$a zim              # PPA and in repo
+$a zim                                  # PPA and in repo
 
 # Fonts. Can't think of something less pressing.
 f="$a fonts"
 "$f-fantasque-sans"
+"$f-firacode"
 "$f-font-awesome"
 "$f-hack-ttf"
 "$f-mathjax"
+"$f-mathjax-extras"
 "$f-noto"
 
-
-# DE Specific [is definitely gonna end up it's own file soon enough]
-# if GNOME
-# $a gparted
-# $a grsync
-# $a gdebi
-# $a synaptic		# Move to a gtk focused script along with gparted. kde has partitionmanager and qapt
 
 # Fix bash's proclivity for global variables
 unset a f
 
+# TODO: 
+# So I wanted to create my own function for asking the user 
+# If they want a certain package and fork the script to the appropriate file.
 # gotta love vim. :119,137s/^/#/gc
 # commented it out until i have the rest of the script tested and down pat
 #function opt-pkg()
@@ -140,28 +156,25 @@ unset a f
 #    opt-pkg "vs-code.sh"
 #fi
 
-# add docker, atom, ffnightly, virtualbox, gitter, dropbox, powershell, signal-desktop, skypeforlinux, tails-installer
+# add docker, atom, ffnightly, virtualbox, gitter, dropbox, powershell, skypeforlinux, tails-installer
 
 # Now snap's
 sudo snap refresh
-# maybe try if [ command -v snap ]; then 
-sudo snap install --channel=edge shellcheck        # should test a little more
-    					           # wonderful choice
+# TODO: This is wrong. What is the syntax for if != True
+if [ "$(command -v shellcheck)" ]; then
+    sudo snap install --channel=edge shellcheck
+fi
+# Need to figure out how to use the ask() function.
 # sudo snap install signal-desktop
 # sudo snap install pycharm-community --channel=edge --classic
 # sudo snap install rclone 			# is an option. idk if it's better to get as a snap or not
-# same thing with firefox but we don't get nightly sooooo
 
-# huh so i just ran a blank `snap search` and it responded with 'interesting packages'
-# htop has one. apt installs version 2.1. termux has 2.2. snap stable is 2.2. edge is 3.0?
-# i realize it's dumb to need the newest version of htop but that was just interesting to me
-# other notable things are nextcloud, docker and hugo. like not bad! 
-# i'm assuming these installations are WAY bigger than the usual one would be but it's....idk more portable? i get packages i don't
-# get otherwise? what is the benefit of a snap? autoupdate i guess?
-# but i wouldn't want vscode from a snap. actually i shouldn't even get it from my own script i need to get it from miniconda fuck.
-
+# Look what else we found
+# sudo snap install htop
+# sudo snap install tldr --edge
 
 # doesn't recognize the function defined below.
+# TODO: How to properly do function calls in Bash.
 if ask "Would you like to install optional KDE-specific software?" N; then
     bash "ubuntu-packages/kde-specific.sh"
 fi
