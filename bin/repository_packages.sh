@@ -18,6 +18,7 @@ $a gnupg
 $a gnupg2
 $a keepassxc		            # Need to check that we're using 18.04
 $a lm-sensors                   # Nobody likes melted CPUs!
+$a mat
 $a software-properties-common   # Should've been called already but in case
 $a tcpdump
 $a traceroute
@@ -30,12 +31,12 @@ $a zenmap
 
 # Help on the command-line. Vim and Git are installed from minimal.
 $a bash-completion
-# $a fzf      		# Not in the Ubuntu repos but we can install in the init.vim.
-$a htop			# Interestingly now a snap
+$a ffmpeg
+$a htop			                # Interestingly now a snap
 $a ncdu
 $a ntfs-3g
-# $a rclone   # Not in repo. go get?
-# $a qemu           # be prepared for a metapackage when you run this
+$a rclone                   # In the repos in 18.04 just gotta check os version 
+# $a qemu                       # be prepared for a metapackage when you run
 $a tree
 $a virt-manager
 $a xclip
@@ -98,8 +99,6 @@ $a network-manager
 $a sockstat                             # gotta thank the BSD boys
 $a torbrowser-launcher
 $a w3m
-# $a wget		                        # already installed
-# $a wpasupplicant                      # not utilized 
 
 # Packages that aren't necessary at all but fun and/or convenient.
 $a audacity
@@ -128,6 +127,9 @@ f="$a fonts"
 "$f-mathjax"
 "$f-mathjax-extras"
 "$f-noto"
+
+# Packages to get rid of. Things in default Kubuntu 18.04 that aren't necessary and annoying
+sudo apt-get purge print-manager && sudo apt-get autoremove
 
 
 # Fix bash's proclivity for global variables
@@ -169,6 +171,9 @@ fi
 # Need to figure out how to use the ask() function.
 # sudo snap install signal-desktop
 # sudo snap install pycharm-community --channel=edge --classic
+
+# rclone is horrifically annoying as a snap. due to the sandboxing
+# it doesn't allow itself to write a config file and that's too much
 # sudo snap install rclone 			# is an option. idk if it's better to get as a snap or not
 
 # Look what else we found

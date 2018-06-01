@@ -9,12 +9,16 @@ a="sudo apt-get install -y"
 
 $a dolphin-plugins
 $a filelight                # legitimately disappointed this isn't in the default install
+$a gnome-icon-theme         # use their icons so things look correct
 $a kio-gdrive
 $a kio-mtp
 $a kio-stash                # git integration in dolphin AND viewable stashes
 $a kleopatra                # came a LONG way usability-wise over last 2 yrs
+                            # also doesn't include the akonadi dependencies that kgpg has
+$a spectacle
 $a qapt-utils
 $a yakuake          # love the dropdown. move to kde specific.
+
 
 # Included in Kubuntu 18.04
 # $a ark              # for just an archive extractor, shockingly good
@@ -23,6 +27,7 @@ $a yakuake          # love the dropdown. move to kde specific.
 # $a kde-spectacle
 # $a kdeconnect               # difficult to understate how great this is
 # $a konsole konsole-kpart
+# $a okular
 
 
 # Getting rid of unnecessary packages
