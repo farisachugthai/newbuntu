@@ -10,11 +10,11 @@ a="sudo apt-get install -y"
 $a dolphin-plugins
 $a filelight                # legitimately disappointed this isn't in the default install
 $a gnome-icon-theme         # use their icons so things look correct
-$a kio-gdrive
 $a kio-mtp
 $a kio-stash                # git integration in dolphin AND viewable stashes
-$a kleopatra                # came a LONG way usability-wise over last 2 yrs
+# $a kleopatra              # came a LONG way usability-wise over last 2 yrs
                             # also doesn't include the akonadi dependencies that kgpg has
+# apparently the KDE neon version is newer and that makes all the difference
 $a spectacle
 $a qapt-utils
 $a yakuake          # love the dropdown. move to kde specific.
@@ -26,6 +26,7 @@ $a yakuake          # love the dropdown. move to kde specific.
 # $a dolphin
 # $a kde-spectacle
 # $a kdeconnect               # difficult to understate how great this is
+# $a kio-gdrive
 # $a konsole konsole-kpart
 # $a okular
 
@@ -33,6 +34,8 @@ $a yakuake          # love the dropdown. move to kde specific.
 # Getting rid of unnecessary packages
 sudo apt-get purge discover* && sudo apt-get autoremove       # I'm sorry 
 sudo apt-get purge printer-driver-hpcups && sudo apt-get autoremove # Not sorry
+
+sudo apt-get purge clamav && sudo apt-get autoremove            # ...wth?
 
 # Muon is on the chopping block. Integrates well with the window manager since it's KDE
 # but just a noticeably inferior product to Synaptic

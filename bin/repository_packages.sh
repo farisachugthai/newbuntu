@@ -69,11 +69,11 @@ $a texinfo
 
 
 # Terminal specific
-$a byobu
 $a dvtm
 $a i3wm
+$a pymux
 $a rxvt-unicode-256color
-$a termit
+# $a termit         # not the termite shell in the repos
 $a tmux
 
 
@@ -82,6 +82,7 @@ $a adb
 $a clang
 $a easygit         # its difficult software guys
 $a exuberant-ctags
+$a fastboot
 $a gdb
 $a git-hub              # go get i think
 $a make
@@ -109,7 +110,6 @@ $a fortune
 $a gimp
 $a mpd
 $a ncmpcpp
-# $a neofetch                           # PPA but script already provided.
 $a octicons
 $a onionshare
 $a sl 
@@ -127,6 +127,7 @@ f="$a fonts"
 "$f-mathjax"
 "$f-mathjax-extras"
 "$f-noto"
+fonts-humor-sans
 
 # Packages to get rid of. Things in default Kubuntu 18.04 that aren't necessary and annoying
 sudo apt-get purge print-manager && sudo apt-get autoremove
@@ -165,22 +166,19 @@ unset a f
 # Now snap's
 sudo snap refresh
 # TODO: This is wrong. What is the syntax for if != True
-if [ "$(command -v shellcheck)" ]; then
+if ! [ "$(command -v shellcheck)" ]; then
     sudo snap install --channel=edge shellcheck
 fi
-# Need to figure out how to use the ask() function.
-# sudo snap install signal-desktop
-# sudo snap install pycharm-community --channel=edge --classic
+sudo snap install signal-desktop
+sudo snap install pycharm-community --channel=edge --classic
 
-# rclone is horrifically annoying as a snap. due to the sandboxing
-# it doesn't allow itself to write a config file and that's too much
-# sudo snap install rclone 			# is an option. idk if it's better to get as a snap or not
+sudo snap install gitter
+####### !!!!! #######
+sudo snap install google-cloud-sdk --classic
+# Was definitely embarassed at how excited i was to see this one
 
-# Look what else we found
-# sudo snap install htop
-# sudo snap install tldr --edge
 
-# doesn't recognize the function defined below.
+
 # TODO: How to properly do function calls in Bash.
 if ask "Would you like to install optional KDE-specific software?" N; then
     bash "ubuntu-packages/kde-specific.sh"
@@ -190,98 +188,4 @@ if ask "Would you like to install optional GNOME-specific software?" N; then
     echo "Coming shortly! Sorry."
 fi
 
-
-# modified version of ask.sh
-# from: https://gist.github.com/davejamesmiller/1965569#file-ask-sh
-# So thank you Dave!
-
-# This is a general-purpose function to ask Yes/No questions in Bash, either
-# with or without a default answer. It keeps repeating the question until it
-# gets a valid answer.
-
-ask() {
-    # https://djm.me/ask
-    local prompt default reply
-
-    while true; do
-
-        if [ "${2:-}" = "Y" ]; then
-            prompt="Y/n"
-            default=Y
-        elif [ "${2:-}" = "N" ]; then
-            prompt="y/N"
-            default=N
-        else
-            prompt="y/n"
-            default=
-        fi
-
-        # can we just put
-        ques="Would you like to install "
-        # and now for prompt all i have to write is
-        # ask "$ques + "packagename (y/n)" Y; then
-        # 1. how does string concatenation work in bash.
-        # 2. what data types does it use?
-        # 3. prompt needs to be tue 1st argument. do we end up woth 2 if
-        # we do it this way?
-
-        # Ask the question (not using "read -p" as it uses stderr not stdout)
-        echo -n "$1 [$prompt] "
-
-        # Read the answer (use /dev/tty in case stdin is redirected from somewhere else)
-        read reply </dev/tty
-
-        # Default?
-        if [ -z "$reply" ]; then
-            reply=$default
-        fi
-
-        # Check if the reply is valid
-        case "$reply" in
-            Y*|y*) return 0 ;;
-            N*|n*) return 1 ;;
-        esac
-
-    done
-}
-
-
-# thanks vim.
-# :159,194s/^/#/gc
-# EXAMPLE USAGE:
-#
-#if ask "Do you want to do such-and-such?"; then
-#    echo "Yes"
-#else
-#    echo "No"
-#fi
-#
-## Default to Yes if the user presses enter without giving an answer:
-#if ask "Do you want to do such-and-such?" Y; then
-#    echo "Yes"
-#else
-#    echo "No"
-#fi
-#
-## Default to No if the user presses enter without giving an answer:
-#if ask "Do you want to do such-and-such?" N; then
-##    echo "Yes"
-#else
-#    echo "No"
-#fi
-#
-## Only do something if you say Yes
-#if ask "Do you want to do such-and-such?"; then
-#    said_yes
-#fi
-#
-## Only do something if you say No
-#if ! ask "Do you want to do such-and-such?"; then
-#    said_no
-#fi
-#
-## Or if you prefer the shorter version:
-#ask "Do you want to do such-and-such?" && said_yes
-#
-#ask "Do you want to do such-and-such?" || said_no
 exit 0

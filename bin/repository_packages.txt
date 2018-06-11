@@ -1,4 +1,4 @@
-
+aircrack-ng
 apt-transport-https
 apt-transport-tor
 autossh
@@ -7,21 +7,31 @@ bleachbit
 gnupg
 gnupg2
 keepassxc		# Need to check that we're using 18.04
+lm-sensors
+mat
 software-properties-common   # Should've been called already but in case
+tcpdump
+traceroute
+vagrant
+wireshark
+whois
 xdotool
+zenmap
 
 
 bash-completion
+ffmpeg
 htop			# Interestingly now a snap
 ncdu
 ntfs-3g
-# a rclone   # Not in repo. go get?
+rclone   # Not in repo. go get?
 tree
 virt-manager
 xclip
 xsel
 
 
+desktop-file-utils
 dnsutils
 findutils
 hfsutils
@@ -32,25 +42,31 @@ poppler-utils
 sensible-utils
 # a xz-utils
 
+tmfs                # not exactly a util but functionality to access time machine file systems
+
 
 freebsd-manpages
 # a info
 manpages
 manpages-posix
 manpages-posix-dev
+pandoc
+python3-examples
+python3.6-examples
+python3.7-examples
 texinfo
 
-byobu
-i3wm
+dvtm
+i3wm 
+pymux
 rxvt-unicode-256color
 tmux
-
-
 
 adb
 clang
 easygit         # its difficult software guys
 exuberant-ctags
+fastboot
 gdb
 git-hub              # go get i think
 make
@@ -61,21 +77,21 @@ chromium-browser-l10n
 chromium-chromedriver
 chromium-codecs-ffmpeg-extra
 curl
+ddgr
 deluge
 network-manager
 sockstat         # gotta thank the BSD boys
 torbrowser-launcher
 w3m
-# a wget		# already installed
-wpasupplicant
 
-
+audacity
 cherrytree
+cmatrix
 cowsay
 fortune
+gimp
 mpd
 ncmpcpp
-# a neofetch         # PPA but script already provided.
 octicons
 onionshare
 sl 
@@ -90,4 +106,42 @@ f="$a fonts"
 "$f-font-awesome"
 "$f-hack-ttf"
 "$f-mathjax"
+"$f-mathjax-extras"
 "$f-noto"
+fonts-humor-sans
+# for plt.xkcd() like that's too good
+
+# Interesting. Useful for having it installed on every computer in a multiuser 
+# system. ublock-origin-docs is also a package
+xul-ext-ublock-origin
+
+
+
+Snap packages!!! Easily the highlight of 18.04
+
+if ! [ "$(command -v shellcheck)" ]; then
+    sudo snap install --channel=edge shellcheck
+fi
+sudo snap install signal-desktop
+sudo snap install pycharm-community --channel=edge --classic
+
+sudo snap install gitter
+####### !!!!! #######
+sudo snap install google-cloud-sdk --classic
+# Was definitely embarassed at how excited i was to see this one
+
+
+
+# here are some ones ill try out and come back and report on
+sudo snap install gogs
+also installed gogsgit and that was equally confusing. i guess i should've done any research at all before running
+sudo snap install git-kraken        # [doesn't take ed25519 so that's a problem]
+sudo snap install easy-openvpn      # [sp?]
+sudo snap install branch-diff
+slack-term
+
+ipfs is one here
+xmr-miner-gui
+keepassxc if you want the security profiles!
+
+like be still my beating heart!

@@ -1,24 +1,48 @@
 #!/bin/bash
 # Maintainer: Faris Chugthai
 
-conda activate base;
+set -eu
+set -nvx
+set -o pipefail
+
+
+# If we can't activate the base environment shut everything down.
+conda activate base || exit
+
 conda config --add channels conda-canary;
 conda config --add channels conda-forge;
 
-conda install --yes ipython flake8 cheat neovim;
+if [[ -d "$HOME/projects/dotfiles/unix/" ]]; then
+    ln -s "$HOME/projects/dotfiles/unix/.condarc" "$HOME/.condarc"
+fi
 
-conda create -n working_env --yes jupyter-lab notebook neovim flake8 yapf pandas scipy cheat yarn;
+# Try to keep as much as possible out of the base installation
+conda install --yes cheat yarn && yarn global add tldr
+
+# These should be separate environments
+#conda create -n working_env --yes jupyter-lab notebook neovim flake8 yapf pandas scipy cheat yarn;
+
+# Jupyter
+conda create -n jupyter --yes notebook jupyter ipython
+
+# Neovim
+conda create -n neovim --yes neovim python-language-server flake8 jedi pyls-mypy black yapf
+
+conda deactivate
 
 # Basically me taking notes on jupyter lab
-conda activate working_env
-yarn global add jupyterlab
-# At what point do i just start running npm i -g npm in the conda script? because conda now controls python and JS
+#conda activate working_env
+#yarn global add jupyterlab
 
-webpack --config webpack.prod.config.js # literally no idea what this does but yarn updated
+# Experimental
+# Jupyterlab
+conda create -n jupyterlab jupyter-lab npm && npm i -g jupyter-lab && conda activate jupyterlab
+# webpack --config webpack.prod.config.js # literally no idea what this does but yarn updated
 # honestly haven't done anything with this yet
 conda install -c condaforge jupyterthemes
 
-conda install jupyter_dashboards -c conda-forge
+conda install -c conda-forge jupyter_dashboards 
+
 jupyter-dashboards quick-setup --sys-prefix --py        # otherwise tries to install to /usr/local/jupyter
 jupyter nbextension enable jupyter_dashboards --py --sys-prefix # to have this activate everytime
 
@@ -29,11 +53,6 @@ jupyter labextension install @jupyterlab/google-drive
 jupyter-labextension enable @jupyterlab/google-drive # i think i did this but if you run
 # jupyter-labextension list google drive comes up so whatever
 
+# but this doesn't do anything because you can't activate the API anymore
 
-# honestly there's a lot of crazy stuff going on in 
-# ~/miniconda3/envs/working_env/lib/python3.6/site-packages/
-
-# CONDA HAS GIT. so we have python, ruby, javascript and git on top of neovim and the notebooks.
-
-# can i call my OS the jupyter OS at this point?
 exit 0

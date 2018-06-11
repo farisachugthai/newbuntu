@@ -10,17 +10,19 @@ alias mkdir="mkdir -pv"
 
 mkdir ~/.bashrc.d
 mkdir ~/bin
-mkdir ~/.tmux
+mkdir ~/.config/nvim/after
+mkdir ~/.config/nvim/ftplugin
+mkdir ~/.config/nvim/spell
+mkdir ~/google
+mkdir ~/iso
 mkdir ~/projects
+mkdir ~/src
+mkdir ~/.tmux
 mkdir ~/virtualenvs
 mkdir ~/.vim/after
 mkdir ~/.vim/ftplugin
 mkdir ~/.vim/spell
 mkdir ~/.vim/undodir
-mkdir ~/.config/nvim/after
-mkdir ~/.config/nvim/ftplugin
-mkdir ~/.config/nvim/spell
-mkdir ~/.config/nvim/undodir
 
 # Now you can utilize the dlink.py file you have in the utilities repo and run commands to symlink everything in the repo back to your original dotfiles. 
 # I'm sure there's a for loop easily in there, or some implementation of os.walk but those things are difficult
