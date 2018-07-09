@@ -1,9 +1,7 @@
 #!/bin/bash
-#
-# Assumes Ubuntu in order to sign keys.
 # Maintainer: Faris Chugthai
-# TODO: apt-get -q isn't very quiet. How does stacking the option fare?
-
+# Unfortunately this entire script has been rendered moot by snaps. Or i should say in 
+# Ubuntu 18.04 only OSes
 
 # 1. Add the Spotify repository signing keys to be able to verify downloaded packages
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0DF731E45CE24F27EEEB1450EFDC8610341D9410

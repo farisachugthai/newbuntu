@@ -17,15 +17,18 @@ if [[ -d "$HOME/projects/dotfiles/unix/" ]]; then
 fi
 
 # Try to keep as much as possible out of the base installation
-conda install --yes cheat yarn && yarn global add tldr
 
-# These should be separate environments
+# Everything you do should start in a separate environment unless installed by
+# package manager  
 #conda create -n working_env --yes jupyter-lab notebook neovim flake8 yapf pandas scipy cheat yarn;
 
 # Jupyter
 conda create -n jupyter --yes notebook jupyter ipython
 
 # Neovim
+# Problem with creating a neovim environment is that you're gonna constantly 
+# get errors that certain modules aren't installed.
+# Or you install every package from every project you ever work on in there.
 conda create -n neovim --yes neovim python-language-server flake8 jedi pyls-mypy black yapf
 
 conda deactivate

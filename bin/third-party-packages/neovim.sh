@@ -5,6 +5,9 @@ if ! [[ "$(command -v add-apt-repository)" ]]; then
     sudo apt-get update && sudo apt-get install -y add-apt-repository
 fi
 
+# TODO: Check if they have installed software-properties-common as that's a 
+# dependency for adding PPAs
+
 # Amazingly add-apt-repository autoruns apt-get update for us!
 sudo add-apt-repository ppa:neovim-ppa/unstable
 sudo apt-get install neovim

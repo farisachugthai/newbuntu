@@ -16,6 +16,7 @@ $a avahi-discover               # with Avahi Browser. very simple zeroconf tool
 $a bleachbit
 $a gnupg
 $a gnupg2
+$a gnupgcurl
 $a keepassxc		            # Need to check that we're using 18.04
 $a lm-sensors                   # Nobody likes melted CPUs!
 $a mat
@@ -44,20 +45,20 @@ $a xsel
 
 
 # Utilities
+$a desktop-file-utils
 $a dnsutils
 $a findutils
+$a hfsutils
 $a hfsplus
 $a hfsprogs
 $a hfsutils
 $a id-utils
 $a poppler-utils
 $a sensible-utils
-# $a xz-utils
 
 
 # Docs
 $a freebsd-manpages
-# $a info
 $a manpages
 $a manpages-posix
 $a manpages-posix-dev
@@ -71,9 +72,7 @@ $a texinfo
 # Terminal specific
 $a dvtm
 $a i3wm
-$a pymux
 $a rxvt-unicode-256color
-# $a termit         # not the termite shell in the repos
 $a tmux
 
 
