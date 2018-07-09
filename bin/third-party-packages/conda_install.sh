@@ -17,16 +17,14 @@ if [[ -d "$HOME/projects/dotfiles/unix/" ]]; then
 fi
 
 # Try to keep as much as possible out of the base installation
-
-# Everything you do should start in a separate environment unless installed by
-# package manager  
+# Everything you do should start in a separate environment unless installed by package manager
 #conda create -n working_env --yes jupyter-lab notebook neovim flake8 yapf pandas scipy cheat yarn;
 
 # Jupyter
 conda create -n jupyter --yes notebook jupyter ipython
 
 # Neovim
-# Problem with creating a neovim environment is that you're gonna constantly 
+# Problem with creating a neovim environment is that you're gonna constantly
 # get errors that certain modules aren't installed.
 # Or you install every package from every project you ever work on in there.
 conda create -n neovim --yes neovim python-language-server flake8 jedi pyls-mypy black yapf
@@ -34,8 +32,8 @@ conda create -n neovim --yes neovim python-language-server flake8 jedi pyls-mypy
 conda deactivate
 
 # Basically me taking notes on jupyter lab
-#conda activate working_env
-#yarn global add jupyterlab
+# conda activate working_env
+# yarn global add jupyterlab
 
 # Experimental
 # Jupyterlab
@@ -54,7 +52,7 @@ jupyter nbextension enable jupyter_dashboards --py --sys-prefix # to have this a
 jupyter labextension install @jupyterlab/google-drive
 
 jupyter-labextension enable @jupyterlab/google-drive # i think i did this but if you run
-# jupyter-labextension list google drive comes up so whatever
+# `jupyter-labextension list` google drive comes up so whatever
 
 # but this doesn't do anything because you can't activate the API anymore
 
