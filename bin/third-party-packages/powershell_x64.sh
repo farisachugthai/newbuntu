@@ -1,20 +1,18 @@
 #!/bin/bash
+# Download powershell
+# Assumes 64bit CPU and was originally written when that was the only arch Microsoft supported for Linux OSes
 
+if [[ "$(lsb_release -rs)" == "16.04" ]]; then
 # Import the public repository GPG keys
-curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-
-
-##### HOLY COW! As of writing this 06/15/18 Microsoft just added support for Ubuntu 18.04 YESTERDAY.
-# How serendipitious
-# https://github.com/PowerShell/PowerShell/releases/tag/v6.1.0-preview.3
-
-
-# TODO: Check if we've already added them because of vscode
-# TODO: Run uname or lsb_release on the version. Then in the else section recommend the app image.
-# Register the Microsoft Ubuntu repository
-curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list | sudo tee /etc/apt/sources.list.d/microsoft.list
+    curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add - ;
+    curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list | sudo tee /etc/apt/sources.list.d/microsoft.list ;
 
 # Install PowerShell
-sudo apt-get update && sudo apt-get install -y powershell
+    sudo apt-get update && sudo apt-get install -y powershell
+fi
+
+if [[ "$(lsb_release -rs)" == "18.04" ]]; then
+   sudo snap install powershell --classic           # gives you powershell 6 on linux!
+fi
 
 exit 0
