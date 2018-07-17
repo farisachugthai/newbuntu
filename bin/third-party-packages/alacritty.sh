@@ -1,31 +1,19 @@
-#!/bin/bash
-# Mainly for alacritty but we have to install the whole toolchain so
+#!/usr/bin/env bash
+# Install the alacritty terminal
 
-# I haven't tested that this is the way to automate the download but according to
-# https://github.com/rust-lang-nursery/rustup.rs/blob/master/rustup-init.sh
-# this script accepts a -y flag that disables confirmation prompts which sounds
-# perfect to me.
+set -eu
 
-if ! [[ -d ~/src ]]; then
-    mkdir ~/src && cd ~/src
-else
-    cd ~/src || exit
+# Try the easy way first but most people don't have rust already setup
+if [[ command -v cargo ]]; then
+    cargo install alacritty
+    exit 0
 fi
 
-curl https://sh.rustup.rs -sSf | sh -y
+# TODO: Give them a choice to install rust using your other script
+echo -e "It seems you don't have rust installed. Please do so; however we can install alacritty another way."
 
 git clone https://github.com/jwilm/alacritty.git
 cd alacritty
-
-rustup completions bash >> "$HOME/.bashrc.d/rustup-completion.bash"
-
-rustup override set stable
-rustup update stable
-
-sudo apt-get update && sudo apt-get install cmake libfreetype6-dev libfontconfig1-dev xclip
-
-# Be patient this part will take a while
-cargo build --release;
 
 # Once that's completed, a binary at /target/release/alacritty should have been made
 sudo cp target/release/alacritty /usr/local/bin # or anywhere else in $PATH
@@ -43,8 +31,14 @@ gzip -c alacritty.man | sudo tee /usr/local/share/man/man1/alacritty.1.gz > /dev
 
 
 # Set up autocompletion
+# TODO: check they have the dir
 cp alacritty-completions.bash ~/.bashrc.d/alacritty-completions.bash
 
 mkdir -pv ~/.config/alacritty
 
+# TODO: Let them know where this file is.
 cp alacritty.yml ~/.config/alacritty/alacritty.yml
+
+echo -e "Congrats you now have alacritty with autocompletions and manpages!"
+
+exit 0
