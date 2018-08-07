@@ -30,11 +30,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 """
 
-# Should i make an __init__.py and just put these in all?
-__author__ = 'Faris Chugthai'
-__copyright__ = 'Copyright (C) 2018 Faris Chugthai'
-__license__ = 'MIT'
-__email__ = 'farischugthai@gmail.com'
 
 
 import os
@@ -61,6 +56,19 @@ def get_dotfiles():
         print(e)
         print("The git clone command didn't work. See above: ")
 
+
+    # DON"T GIT ADD THIS FILE YET
+    # But like how do we call a generator function in A) the correct way and
+    # B) the most conventional and pythonic way?
+
+    # iterSourceCode(REPO)
+    # that function call will return a file in the dotfile repo.
+    # so let's use that as the dest argument when calling symlink_repo
+    # so
+    # dest = iterSourceCode(REPO)
+    # symlink_repo(dest, src)
+    # now that iterSourceCode call needs to be wrapped in a for loop to
+    # actually iterate through the whole tree. how do we write that correctly?
 def iterSourceCode(dir):
     """
     Copied this from pyflakes so I really have to say thank you to PyCQA
