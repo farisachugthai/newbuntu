@@ -30,14 +30,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 """
 
-
-
 import os
 import sys
 
-# So this is gonna link a lot of pointless files you don't care about
-# and with files like .manpath.termux and .mpd.conf.termux you actually don't
-# want it linked at all
 
 def get_dotfiles():
     """Git clone my dotfiles and put them in the exact directory I expect."""
@@ -45,9 +40,10 @@ def get_dotfiles():
     try:
         os.chdir(PROJ)
     except NotADirectoryError as e:
-        os.makedirs(PROJ) and os.chdir(PROJ) or sys.exit("Couldn't create the necessary directory.")
+        os.makedirs(PROJ) and os.chdir(PROJ) or sys.exit(
+                "Couldn't create the necessary directory. Error: " + e)
 
-    # admittedly this is going to add many more steps to the process of finishing
+    # admittedly this is going to add many more steps to the process of
     # this script; however the GitPython package looks really interesting
     # and could be useful for encapsulating git in python!
     try:
@@ -55,7 +51,6 @@ def get_dotfiles():
     except Exception as e:
         print(e)
         print("The git clone command didn't work. See above: ")
-
 
     # DON"T GIT ADD THIS FILE YET
     # But like how do we call a generator function in A) the correct way and
@@ -69,7 +64,9 @@ def get_dotfiles():
     # symlink_repo(dest, src)
     # now that iterSourceCode call needs to be wrapped in a for loop to
     # actually iterate through the whole tree. how do we write that correctly?
-def iterSourceCode(dir):
+
+
+def iterSourceCode(tree):
     """
     Copied this from pyflakes so I really have to say thank you to PyCQA
     for both the wonderful tools but the great source code!
@@ -78,19 +75,33 @@ def iterSourceCode(dir):
         into and any .py files found will be yielded.  Any non-directories will
         be yielded as-is.
 
-    :return file
+    :return file: The file to be symlinked's absolute path
     """
     for item in tree:
         if os.path.isdir(item):
+            # low key we should check that the directory is a directory in $HOME first
             for dirpath, dirnames, filenames in os.walk(tree):
                 for filename in filenames:
-                    full_path = os.path.join(dirpath, filename)
-                    yield full_path
+                    dest_path = os.path.join(dirpath, filename)
+                    yield dest_path
         else:
-            yield item
+            dest_abs_path = os.path.abspath(item)
+            yield dest_abs_path
+
+
+def tree_check():
+    """Use a comprehension to ensure all the directories in the repository are present in $HOME"""
+
+    # let's come up with the list of every dir in REPO
+    all_dirs = [ direc for direc in os.listdir(REPO) if os.path.isdir(direc) ]
+
+    # this syntax HAS to be wrong. also does listdir return only directories or every file?
+    src_dir = ( direc for direc in os.listdir(REPO) not in HOME )
+    os.makedirs(src_dir)
+
 
 def dir_checker():
-    for root, dirs, files in os.walk(repo):
+    for root, dirs, files in os.walk(REPO):
         # Now lets do the folder check
         if not os.path.isdir(root):
             os.makedirs(root, exist_ok=False)
@@ -99,8 +110,8 @@ def dir_checker():
 def symlink_repo(file):
     ''' Symlink the dotfiles if nothing exists in the home directory. '''
 
-    src = os.path.join(repo, file)
-    dest = os.path.join(home, file)
+    src = os.path.join(REPO, file)
+    dest = os.path.join(HOME, file)
     try:
         os.symlink(src, dest)
     except FileExistsError:
@@ -108,16 +119,34 @@ def symlink_repo(file):
             # print("Sorry but a symlink to {0} already exists".format(dest))
             pass
         elif os.path.isfile(dest):
-            print("Sorry but a file to {0} already exists".format(dest))
-            backup_prompt()
+            pass
+        # thinking about making an exception for .bashrc, .profile etc.
+        # otherwise these if loops wouldn't be here
+        # not sure if I wanna try a regex or just hard code it in
+
 
 def main():
-    # TODO:
+    """
+    We could just symlink all the files but to make things more efficient
+    and generally more interesting we're gonna use a generator to iterate
+    over all the files in the repo
+    """
     get_dotfiles()
+
+    # TODO: Write a function that iterates over all the directories
+    # Dude i think i got you. was looking through my OS notes and found this
+
+    tree_check()
+    # in REPO and ensures that they exist in $HOME
+    # like i don't trust that dir_checker nonsense
+
+    for file in iterSourceCode(REPO):
+        symlink_repo(file)
+
 
 if __name__ == '__main__':
     # Module level vars but keep them isolated if we source anything from here
     HOME = os.path.join(os.path.expanduser("~"), "")
-    PROJ = os.path.join(home, "projects")
-    REPO = os.path.join(proj, "dotfiles")
+    PROJ = os.path.join(HOME, "projects")
+    REPO = os.path.join(PROJ, "dotfiles")
     main()
