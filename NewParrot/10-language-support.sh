@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Maintainer: Faris Chugthai
+# TODO: Use the sha1sum and sha256sum commands to verify all curls
 
 # So up until things get a bit more organized let's dump all of our language related ideas into one spot hm?
 
@@ -92,7 +93,7 @@ conda install yarn
 yarn global add bash-language-server tldr
 conda deactivate
 
-# Ruby: 
+# Ruby:
 # I genuinely don't know ruby just wanted to throw this out there
 # Let's start by installing rvm
 # Alternatively we could use conda and install different versions of ruby that way
@@ -105,7 +106,7 @@ else
 fi
 
 # Install rvm [which is, surprisingly and unsurprisingly not packaged with
-# Anaconda] 
+# Anaconda]
 
 if [[ "$OS" == 'Ubuntu' ]]; then
     # https://github.com/rvm/ubuntu_rvm
@@ -115,7 +116,7 @@ if [[ "$OS" == 'Ubuntu' ]]; then
     sudo apt-get install rvm
 else
     echo -e 'As of 06/30/2018 the fingerprint on the gpg keys held by the developers of RVM is \n409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB\n'
-    echo 'Ensure that this is correct.' 
+    echo 'Ensure that this is correct.'
     sleep 10
 
     gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
