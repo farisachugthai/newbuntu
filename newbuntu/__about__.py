@@ -1,0 +1,7 @@
+__author__ = 'Faris Chugthai'
+__copyright__ = 'Copyright (C) 2018 Faris Chugthai'
+__description__ = 'Automates the process of setting up a development workstation on an Ubuntu OS.'
+__email__ = 'farischugthai@gmail.com'
+__license__ = 'MIT'
+__title__ = 'newbuntu'
+__package_name__ = 'newbuntu'

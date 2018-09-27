@@ -1,13 +1,23 @@
-#!usr/env/bin bash
+#!/usr/env/bin bash
 # Maintainer: Faris Chugthai
-#
+
+set -euo pipefail
+
 # Objective: Get the minimum requirements for a functionally useful workstation.
 # Install OpenSSH, a firewall, and update to the newest versions of Git and Vim we can find.
 
-if (( "$EUID" != 0 )); then
+if [[ "$EUID" -ne 0 ]]; then
     echo "Please run as root"
     exit
 fi
+
+# Let's do a little base configuration
+BASE_DIRECTORY="$(dirname $0)"
+
+important() {
+    echo -e "\033[31m${1}\033[0m"
+}
+
 
 # Update the system
 apt update && apt upgrade -y && apt autoremove -y;
