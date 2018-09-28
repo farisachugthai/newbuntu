@@ -59,7 +59,16 @@ rustup run nightly cargo install racer
 
 wget -O "$HOME/miniconda.sh" "http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-`uname -m`.sh"
 
+<<<<<<< Updated upstream
 bash "$HOME/miniconda.sh" -b -p
+||||||| merged common ancestors
+# TODO: Verify this is the right command
+bash -b -p "$HOME/miniconda3" "$HOME/miniconda.sh"
+=======
+# Genuinely can't say why this command wouldn't silently for me until i moved 
+# the flags to the end of the command?
+bash "$HOME/miniconda.sh" -b -p
+>>>>>>> Stashed changes
 
 if [[ -d "$HOME/miniconda3/etc/profile.d/conda.sh" ]]; then
     source "$HOME/miniconda3/etc/profile.d/conda.sh"
@@ -86,10 +95,16 @@ conda install yarn
 yarn global add bash-language-server tldr
 conda deactivate
 
+<<<<<<< Updated upstream
 #######################################################################
 #                               Ruby:                                 #
 #######################################################################
 
+||||||| merged common ancestors
+# Ruby: 
+=======
+# Ruby:
+>>>>>>> Stashed changes
 # I genuinely don't know ruby just wanted to throw this out there
 # Let's start by installing rvm
 # Alternatively we could use conda and install different versions of ruby that way
