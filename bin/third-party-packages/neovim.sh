@@ -15,7 +15,7 @@ sudo apt-get install neovim
 if [[ -n "$CONDA_EXE" ]]; then
     if [[ "$(command -v conda)" ]]; then
         conda deactivate;
-        conda create -n neovim neovim python-language-server jedi flake8 autopep black npm
+        conda create -n neovim neovim python-language-server[all] flake8 yarn restructuredtext-lint ipython  # or do i wanna use yarn hm
         conda activate neovim
     else
 	    "$(echo "$CONDA_EXE")" install neovim;

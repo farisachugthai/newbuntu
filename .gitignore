@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 # gitignore
+||||||| merged common ancestors
+# Global Gitignore
+=======
+# Gitignore
+>>>>>>> Still very rough. Reinstalled OS so chipping away.
 # Maintainer: Faris Chugthai
 
 # Personal
@@ -309,7 +315,7 @@ ecf/
 rcf/
 
 # Windows Store app package directories and files
-AppPackages/
+# AppPackages/
 BundleArtifacts/
 Package.StoreAssociation.xml
 _pkginfo.txt
