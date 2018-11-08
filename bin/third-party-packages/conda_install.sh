@@ -1,8 +1,9 @@
-#!/bin/bash
-# Maintainer: Faris Chugthai
+#!/usr/bin/env bash
+# So wait why does this script not have the part where we curl/wget the actual conda script???
+# Why would you assume conda's already installed?
+# Or is this script just super old and not complete? *sigh*
 
 set -eu
-set -nvx
 set -o pipefail
 
 

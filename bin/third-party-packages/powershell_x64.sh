@@ -1,7 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Download powershell
 # Assumes 64bit CPU and was originally written when that was the only arch Microsoft supported for Linux OSes
 
+# Method 1:
 if [[ "$(lsb_release -rs)" == "16.04" ]]; then
 # Import the public repository GPG keys
     curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add - ;
@@ -11,6 +12,7 @@ if [[ "$(lsb_release -rs)" == "16.04" ]]; then
     sudo apt-get update && sudo apt-get install -y powershell
 fi
 
+# Method 2:
 if [[ "$(lsb_release -rs)" == "18.04" ]]; then
    sudo snap install powershell --classic           # gives you powershell 6 on linux!
 fi

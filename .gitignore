@@ -1,11 +1,9 @@
-# Global Gitignore
+# Gitignore
 # Maintainer: Faris Chugthai
 
 # Personal
 .zim/
 tmux-history
-# kept debating this one. Going to use it for files that are going to be in
-# the repo temporarily but shouldn't get pushed
 *.local
 
 # Python
@@ -135,7 +133,6 @@ Thumbs.db
 x64/
 x86/
 bld/
-[Bb]in/
 [Oo]bj/
 [Ll]og/
 
@@ -312,7 +309,7 @@ ecf/
 rcf/
 
 # Windows Store app package directories and files
-AppPackages/
+# AppPackages/
 BundleArtifacts/
 Package.StoreAssociation.xml
 _pkginfo.txt

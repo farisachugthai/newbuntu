@@ -1,15 +1,14 @@
 #!/usr/bin/env bash
-# Written by the lovely people at Mozilla.
-# I've simply written something small so one doesn't have to remember to install it.
+# Officially checked and works as of: Nov 03, 2018
+set -euo pipefail
 
-# firefox nightly in ubuntu PPA. tested using lsb_release.
-# KDE Neon has PPAs and doesn't go by 'Ubuntu' so this might need to be a a case ... esac loop
-if [[ "$(lsb_release -is)" == 'Ubuntu' ]]; then
+# FireFox Nightly is distributed in an Ubuntu PPA. I also consider if the
+# user is on KDE Neon, a distro based off of Ubuntu, though I'm sure this
+# could open a lot of possibilities.
+if [[ "$(lsb_release -is)" == 'Ubuntu' || "$(lsb_release -is)" == 'neon' ]]; then
     sudo add-apt-repository ppa:ubuntu-mozilla-daily/ppa
-    sudo apt update
-    sudo apt install firefox-trunk
-elif [[ "$(lsb_release -is)" == 'Parrot' ]]; then
-    echo -e "First off we're gonna need to do something about firejail because all your applications are currently sandboxed.\n"
+    sudo apt-get -q update
+    sudo apt-get -qy install firefox-trunk
 fi
 
 exit 0

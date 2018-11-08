@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash
 # Assumes Ubuntu
 # Maintainer: Faris Chugthai
 
@@ -26,13 +26,13 @@ $a yakuake          # love the dropdown. move to kde specific.
 # $a dolphin
 # $a kde-spectacle
 # $a kdeconnect               # difficult to understate how great this is
-# $a kio-gdrive
+# $a kio-gdrive               # wasn't included in kde neon and neither was kaccounts-integration
 # $a konsole konsole-kpart
 # $a okular
 
 
 # Getting rid of unnecessary packages
-sudo apt-get purge discover* && sudo apt-get autoremove       # I'm sorry 
+sudo apt-get purge discover* && sudo apt-get autoremove       # I'm sorry
 sudo apt-get purge printer-driver-hpcups && sudo apt-get autoremove # Not sorry
 
 sudo apt-get purge clamav && sudo apt-get autoremove            # ...wth?
