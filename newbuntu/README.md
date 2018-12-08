@@ -1,5 +1,20 @@
 # README
 
+## Suggestions and Roadmap:
+
+11/01/18
+
+What'll end up taking a ton of work [outside of just resetting up this operating system while learning how to do so using python], is getting code organized and where it needs to be.
+
+Good spot to start?
+
+Pick away at 10-langauge-support.sh.
+
+Its the amalgation of lots of different things, and as you keep working on this repo, you'll probably end up dropping the unimportant bs.
+
+Also don't hesitate to do the same thing or even just copy paste the vim-setup.py file in viconf over.
+
+Old: 
 Yeah so I'm kinda starting over again because this last version quite honestly sucks.
 
 So I installed Parrot OS on my laptop and now I'm kinda just tracking what I had

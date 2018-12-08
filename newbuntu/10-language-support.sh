@@ -26,30 +26,37 @@ else
     # an existing rust installation and i'd prefer using rustup then using
     # conda for everything
     # unrelated note: if memory serves rustup didn't work on an aarch64 cpu
-    sudo apt-get update && sudo apt-get install cmake libfreetype6-dev libfontconfig1-dev xclip
+#     sudo apt-get update && sudo apt-get install cmake libfreetype6-dev libfontconfig1-dev xclip
 
     # don't know how to automate this exactly. requires the user to agree to the default settings.
-    curl https://sh.rustup.rs -sSf | sh
+    # curl https://sh.rustup.rs -sSf | sh
+
+ 
+	echo -e "You now have rust! Go forth and enjoy ripgrep, faster terminals and stable toolchains!"
+	echo -e "We're going to run source $HOME/.cargo/env so that we can keep running in the same shell."
+
+	source "$HOME/.cargo/env"
+
+    # TODO: Give them options for where it goes.
+    if ! [[ -d "$HOME/.bashrc.d/" ]]; then
+	    mkdir -pv "$HOME/.bashrc.d"
+    fi
     rustup completions bash >> "$HOME/.bashrc.d/rustup-completion.bash"
-    rustup override set stable
-    rustup update stable
+    # rustup override set stable
+    # rustup update stable
 
 fi
 
-echo -e "You now have rust! Go forth and enjoy ripgrep, faster terminals and stable toolchains!"
-echo -e "We're going to run source $HOME/.cargo/env so that we can keep running in the same shell."
-
-source "$HOME/.cargo/env"
 
 echo -e "Now we can install ripgrep and fd!"
 
-cargo install ripgrep fd-find
+# cargo install ripgrep fd-find
 
-echo -e "The Rust Language Server comes pre-installed after running updates.
-    \ But if we want code-completion from racer we need to setup the nightly channel."
+echo -e "The Rust Language Server comes pre-installed after running updates. \
+       	But if we want code-completion from racer we need to setup the nightly channel."
 
-rustup install nightly
-rustup run nightly cargo install racer
+# rustup install nightly
+# rustup run nightly cargo install racer
 
 # TODO: Alacritty. Could use cargo-deb or even snaps.
 
@@ -57,21 +64,18 @@ rustup run nightly cargo install racer
 #                                Conda                                #
 #######################################################################
 
+# before running this wget, should we run a few checks that it doesn't already exist?
 
-wget -O "$HOME/miniconda.sh" "http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-`uname -m`.sh"
+# wget -O "$HOME/miniconda.sh" "http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-`uname -m`.sh"
 
-<<<<<<< Updated upstream
-bash "$HOME/miniconda.sh" -b -p
-||||||| merged common ancestors
+# bash "$HOME/miniconda.sh" -b -p
 # TODO: Verify this is the right command
-bash -b -p "$HOME/miniconda3" "$HOME/miniconda.sh"
-=======
+# bash -b -p "$HOME/miniconda3" "$HOME/miniconda.sh"
 # Genuinely can't say why this command wouldn't silently for me until i moved 
 # the flags to the end of the command?
-bash "$HOME/miniconda.sh" -b -p
->>>>>>> Stashed changes
+# bash "$HOME/miniconda.sh" -b -p
 
-if [[ -d "$HOME/miniconda3/etc/profile.d/conda.sh" ]]; then
+if [[ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]]; then
     source "$HOME/miniconda3/etc/profile.d/conda.sh"
 fi
 
@@ -81,14 +85,17 @@ conda update -n base --all || echo "Conda may not have been acivated. Reopen
 
 conda activate base || exit 127
 
-conda install cheat
+conda install cheat	# and everything else you want this'll be a procedure
 
+exit 0
 #######################################################################
 #                             JavaScript:                             #
 #######################################################################
 
-
 ## This is also gonna be a conda controlled thing because it's very easy for things to get wildly out of control
+
+# Eh. Instead of doing this you could also manage nvm installations with nvm.
+# Idk.
 
 conda create -n yarn
 conda activate yarn
@@ -96,6 +103,7 @@ conda install yarn
 yarn global add bash-language-server tldr
 conda deactivate
 
+<<<<<<< HEAD:NewParrot/10-language-support.sh
 <<<<<<< HEAD
 <<<<<<< HEAD
 # Ruby:
@@ -106,10 +114,15 @@ conda deactivate
 =======
 <<<<<<< Updated upstream
 >>>>>>> Making a branch to consolidate all changes.
+||||||| merged common ancestors:NewParrot/10-language-support.sh
+<<<<<<< Updated upstream
+=======
+>>>>>>> Commit changes since switching back to KDE Neon:newbuntu/10-language-support.sh
 #######################################################################
 #                               Ruby:                                 #
 #######################################################################
 
+<<<<<<< HEAD:NewParrot/10-language-support.sh
 <<<<<<< HEAD
 >>>>>>> Stashes
 ||||||| merged common ancestors
@@ -117,9 +130,20 @@ conda deactivate
 ||||||| merged common ancestors
 # Ruby: 
 =======
+||||||| merged common ancestors:NewParrot/10-language-support.sh
+||||||| merged common ancestors
+# Ruby: 
+=======
+=======
+>>>>>>> Commit changes since switching back to KDE Neon:newbuntu/10-language-support.sh
 # Ruby:
+<<<<<<< HEAD:NewParrot/10-language-support.sh
 >>>>>>> Stashed changes
 >>>>>>> Making a branch to consolidate all changes.
+||||||| merged common ancestors:NewParrot/10-language-support.sh
+>>>>>>> Stashed changes
+=======
+>>>>>>> Commit changes since switching back to KDE Neon:newbuntu/10-language-support.sh
 # I genuinely don't know ruby just wanted to throw this out there
 # Let's start by installing rvm
 # Alternatively we could use conda and install different versions of ruby that way

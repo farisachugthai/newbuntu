@@ -29,6 +29,8 @@ echo -e "Shellcheck. A phenomenal bash linter that is written in Haskell,
         \ I'm unforunately in the position of not knowing how to install or
         \ build the package. But it doesn't matter!"
 
+# Possibly offer to display the detailed info but default to no.
+
 sudo snap install shellcheck --edge
 
 

@@ -1,43 +1,39 @@
-#!/bin/bash
-# Honestly don't think this'll involve much outside of getting the PPA, i guess
-# illl copy paste the directions and also show how to install spacemacs because
-# that's actually the version of emacs i'm using.
+#!/usr/bin/env bash
+# Maintainer: Faris Chugthai
 
-> (base) faris@farisLinux:~$ sudo add-apt-repository ppa:ubuntu-elisp/ppa
-> [sudo] password for faris:
-> Sorry, try again.
-> [sudo] password for faris:
->  The Official ;-) Ubuntu Emacs Daily Snapshot PPA.
->
-> The packaging metadata used here was written completely from scratch in 2013 by Robert Bruce Park, completely discarding all legacy cruft associated with the official Emacs package for debian/ubuntu. This means:
->
-> * No distropatches. Many of the existing distropatches were backported from trunk, so this shouldn't be a big deal, however there is a chance that your favorite bug was only ever fixed in a distropatch, and that has now regressed in these snapshots.
->
-> * Little/no support for installing debian packages of elisp modules. Much of that support exists only in the form of a distropatch, which is not included here. So for example if you were to `apt-get install yaml-mode`, you would have to include "(require 'yaml-mode)" in your init, but you wouldn't be able to autoload yaml-mode like you may be accustomed to with the stable series. I am working on enabling this, but be warned that it is currently broken.
->
-> * On the plus side, package.el works *excellently* and most of the packages you might want to install should be available either from MELPA or Marmalade or similar. In general, if you are using these snapshots you will want to `M-x package-install foo` rather than `apt-get install foo`.
->  More info: https://launchpad.net/~ubuntu-elisp/+archive/ubuntu/ppa
-> Press [ENTER] to continue or ctrl-c to cancel adding it
->
-> gpg: keyring `/tmp/tmpgo65lgko/secring.gpg' created
-> gpg: keyring `/tmp/tmpgo65lgko/pubring.gpg' created
-> gpg: requesting key D62FCE72 from hkp server keyserver.ubuntu.com
-> gpg: /tmp/tmpgo65lgko/trustdb.gpg: trustdb created
-> gpg: key D62FCE72: public key "Launchpad PPA for Ubuntu Emacs Lisp" imported
-> gpg: Total number processed: 1
-> gpg:               imported: 1  (RSA: 1)
+# set -euo pipefail
 
+echo -e "We're going to add the Emacs PPA to the list of our trusted sources."
 
-#### """ 
-Then i ran an update and couldn't find the right package. Apparently it provides
-    both emacs 25 which is generally new [newer than the normal one i get] and
-    emacs-snapshot which was updated a few hours ago. literally updated like
-     every day. why not? 
+echo -e "As a result, please press enter at the prompt."
 
-So i went with emacs-snapshot but accidentally did it after already installing
-emacs25. it messed each other up midinstallation so i got rid of everything then
-reinstalled emacs-snapshot. 
+# Should we check for software-properties-common and all of that stuff
+# or force this command to be chained in after other scripts that already
+# made that check?
+sudo add-apt-repository ppa:ubuntu-elisp/ppa
 
-opened it up and it launched spacemacs 25. cool!
+echo -e "You may now install emacs or emacs-snapshot. Snapshot is the nightly"
+echo -e " build, but should prove to be relatively stable. However you may not"
+echo -e " install both packages at the same time."
 
-"""
+echo -e "Now we'll install spacemacs."
+
+if [[ -f "$HOME/.emacs" ]]; then
+    echo -e "Now we're going to back up your old emacs config to ~/.emacs.bak"
+    mv -iv "$HOME/.emacs" "$HOME/.emacs.bak"
+fi
+
+if [[ -d "$HOME/.emacs.d" ]]; then
+    echo -e "Backing up ~/.emacs.d to ~/.emacs.d.bak..."
+    mv -iv "$HOME/.emacs.d" "$HOME/.emacs.d.bak"
+fi
+
+git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+
+echo -e "If you have not done so already, run the script in this repository"
+echo -e "to install NERD fonts. Source Code Pro as well as Mathematica are"
+echo -e "available for Ubuntu 18.04+"
+
+echo -e "Enjoy!"
+
+exit 0

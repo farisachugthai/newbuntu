@@ -1,0 +1,6 @@
+{
+    "python.linting.pylintEnabled": false,
+    "python.pythonPath": "/home/faris/miniconda3/envs/neovim/bin/python",
+    "markdown.preview.fontFamily": "Fira Code Retina', 'Droid Sans', 'Ubuntu', 'Inconsolata', Dejavu Serif",
+    "typescript.suggest.completeFunctionCalls": true
+}
