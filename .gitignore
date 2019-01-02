@@ -1,14 +1,15 @@
-# Global Gitignore
+# gitignore
 # Maintainer: Faris Chugthai
 
 # Personal
 .zim/
 tmux-history
-# kept debating this one. Going to use it for files that are going to be in
-# the repo temporarily but shouldn't get pushed
+*.local
 *.local
 
 # Python
+# Repository Specific Ignores:
+
 # mypy
 .mypy_cache/
 
@@ -44,18 +45,12 @@ build/
 # KDE directory settings
 .directory
 
-# PyCharm
-.idea
-
 # From:
 # https://raw.githubusercontent.com/github/gitignore/afbff9027d02ccfc680e031f6c295f79ad61662d/Global/Tags.gitignore
 
 # Ignore tags created by etags, ctags, gtags (GNU global) and cscope
-*tags
 /tags*tags
 *[Tt]ags*
-/tags/
-*/tags/*
 TAGS
 .TAGS
 TAGS/
@@ -135,7 +130,6 @@ Thumbs.db
 x64/
 x86/
 bld/
-[Bb]in/
 [Oo]bj/
 [Ll]og/
 
