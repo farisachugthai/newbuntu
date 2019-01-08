@@ -6,55 +6,43 @@
 set -eu
 set -o pipefail
 
+conda_install(){
+    curl --config ./curlrc --output miniconda.sh "https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-$(uname -m).sh"
+    bash miniconda.sh -b
+    source "$HOME/miniconda3/etc/profile.d/conda.sh"
+}
+
+if ! [[ -d "$HOME/miniconda3" ]]; then
+    conda_install
+fi
 
 # If we can't activate the base environment shut everything down.
-conda activate base || exit
+conda activate base || echo -e "Couldn't activate conda. Ensure everything in 
+installation finished properly. If so, close terminal and re-run script." && exit 127
 
 conda config --add channels conda-canary;
 conda config --add channels conda-forge;
 
+# Linking my personal dotfiles back.
 if [[ -d "$HOME/projects/dotfiles/unix/" ]]; then
     ln -s "$HOME/projects/dotfiles/unix/.condarc" "$HOME/.condarc"
 fi
 
-# Try to keep as much as possible out of the base installation
-# Everything you do should start in a separate environment unless installed by package manager
+echo -e "Try to keep as much as possible out of the base installation as you can."
+
+echo -e "Install as much as possible in separate environments, and you'll have \
+a very smooth experience."
+
 #conda create -n working_env --yes jupyter-lab notebook neovim flake8 yapf pandas scipy cheat yarn;
 
 # Jupyter
-conda create -n jupyter --yes notebook jupyter ipython
+# conda create -n jupyter --yes notebook jupyter ipython
 
 # Neovim
 # Problem with creating a neovim environment is that you're gonna constantly
 # get errors that certain modules aren't installed.
 # Or you install every package from every project you ever work on in there.
-conda create -n neovim --yes neovim python-language-server flake8 jedi pyls-mypy black yapf
+# conda create -n neovim --yes neovim python-language-server flake8 jedi yapf ipython restructuredtext_lint
 
-conda deactivate
-
-# Basically me taking notes on jupyter lab
-# conda activate working_env
-# yarn global add jupyterlab
-
-# Experimental
-# Jupyterlab
-conda create -n jupyterlab jupyter-lab npm && npm i -g jupyter-lab && conda activate jupyterlab
-# webpack --config webpack.prod.config.js # literally no idea what this does but yarn updated
-# honestly haven't done anything with this yet
-conda install -c condaforge jupyterthemes
-
-conda install -c conda-forge jupyter_dashboards 
-
-jupyter-dashboards quick-setup --sys-prefix --py        # otherwise tries to install to /usr/local/jupyter
-jupyter nbextension enable jupyter_dashboards --py --sys-prefix # to have this activate everytime
-
-# then i ran jupyter nbextension list and somehow i enabled jupyter-js-widgets....neat?
-
-jupyter labextension install @jupyterlab/google-drive
-
-jupyter-labextension enable @jupyterlab/google-drive # i think i did this but if you run
-# `jupyter-labextension list` google drive comes up so whatever
-
-# but this doesn't do anything because you can't activate the API anymore
-
+# conda deactivate
 exit 0

@@ -315,7 +315,7 @@ ecf/
 rcf/
 
 # Windows Store app package directories and files
-# AppPackages/
+AppPackages/
 BundleArtifacts/
 Package.StoreAssociation.xml
 _pkginfo.txt
