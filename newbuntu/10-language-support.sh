@@ -5,7 +5,7 @@
 set -eu
 set -o pipefail
 
-if [[ "$(command -v lsb_release)" ]]; then
+if [[ -n "$(command -v lsb_release)" ]]; then
     OS="$(lsb_release --short --id)"       # Typically outputs the single word Ubuntu, Parrot, Termux etc
 else
     OS="$(uname -o)"
@@ -31,15 +31,15 @@ else
     # don't know how to automate this exactly. requires the user to agree to the default settings.
     # curl https://sh.rustup.rs -sSf | sh
 
- 
-	echo -e "You now have rust! Go forth and enjoy ripgrep, faster terminals and stable toolchains!"
-	echo -e "We're going to run source $HOME/.cargo/env so that we can keep running in the same shell."
 
-	source "$HOME/.cargo/env"
+    echo -e "You now have rust! Go forth and enjoy ripgrep, faster terminals and stable toolchains!"
+    echo -e "We're going to run source $HOME/.cargo/env so that we can keep running in the same shell."
+
+    source "$HOME/.cargo/env"
 
     # TODO: Give them options for where it goes.
     if ! [[ -d "$HOME/.bashrc.d/" ]]; then
-	    mkdir -pv "$HOME/.bashrc.d"
+        mkdir -pv "$HOME/.bashrc.d"
     fi
     rustup completions bash >> "$HOME/.bashrc.d/rustup-completion.bash"
     # rustup override set stable
@@ -53,7 +53,7 @@ echo -e "Now we can install ripgrep and fd!"
 # cargo install ripgrep fd-find
 
 echo -e "The Rust Language Server comes pre-installed after running updates. \
-       	But if we want code-completion from racer we need to setup the nightly channel."
+        But if we want code-completion from racer we need to setup the nightly channel."
 
 # rustup install nightly
 # rustup run nightly cargo install racer
@@ -71,7 +71,7 @@ echo -e "The Rust Language Server comes pre-installed after running updates. \
 # bash "$HOME/miniconda.sh" -b -p
 # TODO: Verify this is the right command
 # bash -b -p "$HOME/miniconda3" "$HOME/miniconda.sh"
-# Genuinely can't say why this command wouldn't silently for me until i moved 
+# Genuinely can't say why this command wouldn't silently for me until i moved
 # the flags to the end of the command?
 # bash "$HOME/miniconda.sh" -b -p
 
@@ -85,7 +85,7 @@ conda update -n base --all || echo "Conda may not have been acivated. Reopen
 
 conda activate base || exit 127
 
-conda install cheat	# and everything else you want this'll be a procedure
+conda install cheat # and everything else you want this'll be a procedure
 
 exit 0
 #######################################################################
@@ -103,47 +103,7 @@ conda install yarn
 yarn global add bash-language-server tldr
 conda deactivate
 
-<<<<<<< HEAD:NewParrot/10-language-support.sh
-<<<<<<< HEAD
-<<<<<<< HEAD
-# Ruby:
-||||||| merged common ancestors
-# Ruby: 
-=======
-||||||| merged common ancestors
-=======
-<<<<<<< Updated upstream
->>>>>>> Making a branch to consolidate all changes.
-||||||| merged common ancestors:NewParrot/10-language-support.sh
-<<<<<<< Updated upstream
-=======
->>>>>>> Commit changes since switching back to KDE Neon:newbuntu/10-language-support.sh
-#######################################################################
-#                               Ruby:                                 #
-#######################################################################
-
-<<<<<<< HEAD:NewParrot/10-language-support.sh
-<<<<<<< HEAD
->>>>>>> Stashes
-||||||| merged common ancestors
-=======
-||||||| merged common ancestors
-# Ruby: 
-=======
-||||||| merged common ancestors:NewParrot/10-language-support.sh
-||||||| merged common ancestors
-# Ruby: 
-=======
-=======
->>>>>>> Commit changes since switching back to KDE Neon:newbuntu/10-language-support.sh
-# Ruby:
-<<<<<<< HEAD:NewParrot/10-language-support.sh
->>>>>>> Stashed changes
->>>>>>> Making a branch to consolidate all changes.
-||||||| merged common ancestors:NewParrot/10-language-support.sh
->>>>>>> Stashed changes
-=======
->>>>>>> Commit changes since switching back to KDE Neon:newbuntu/10-language-support.sh
+# Ruby: {{{1
 # I genuinely don't know ruby just wanted to throw this out there
 # Let's start by installing rvm
 # Alternatively we could use conda and install different versions of ruby that way
