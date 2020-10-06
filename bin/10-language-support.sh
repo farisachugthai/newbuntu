@@ -133,4 +133,9 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 rvm install ruby-head
 
+# TODO:
+# Alternatively:
+# sudo apt-add-repository ppa:brightbox/ruby-ng
+
+
 exit 0
