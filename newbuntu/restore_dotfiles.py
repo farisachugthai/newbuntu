@@ -9,7 +9,7 @@ Ideally, the script will be generalized.
 
 TODO:
     Ran this and got these errs::
-        (base) faris@faris-U56E:~/projects/newbuntu/newbuntu$ python restore_dotfiles.py 
+        (base) faris@faris-U56E:~/projects/newbuntu/newbuntu$ python restore_dotfiles.py
         fatal: destination path 'dotfiles' already exists and is not an empty directory.
         Traceback (most recent call last):
           File "restore_dotfiles.py", line 152, in <module>
@@ -19,6 +19,9 @@ TODO:
           File "restore_dotfiles.py", line 99, in tree_check
             src_dir = ( direc for direc in os.listdir(REPO) not in HOME )
         TypeError: 'in <string>' requires string as left operand, not list
+
+
+Let's see if we can merge the files together and get anything of use.
 """
 import os
 import sys
@@ -27,6 +30,9 @@ import sys
 def get_dotfiles(PROJ):
     """Git clone dotfiles and put them in a predefined directory.
 
+    The alternative is to developer in the debugger because
+    this script is failing silently.
+
     TODO:
         - Import argparse and allow the user to specify.
         - Subprocess and capture output. Ensure command ran successfully.
@@ -34,7 +40,6 @@ def get_dotfiles(PROJ):
     :param path: The path to the dotfiles
 
     """
-
     try:
         os.chdir(PROJ)
     except NotADirectoryError as e:
@@ -53,8 +58,8 @@ def iterSourceCode(tree):
     for both the wonderful tools but the great source code!
 
     :param dir: Where the dotfiles are located. Directories will be recursed
-        into and any .py files found will be yielded.  Any non-directories will
-        be yielded as-is.
+                into and any .py files found will be yielded.
+                Any non-directories will be yielded as-is.
 
     :return file: The file to be symlinked's absolute path
     """
@@ -72,7 +77,7 @@ def iterSourceCode(tree):
 
 def tree_check():
     """Use a comprehension to validate directory existence in $HOME.
-    
+
     The directories in the tree where the files currently are, require a
     mirrored setup in the user's home directory.ensure all the directories in
     the repository are existent and writable.
@@ -93,7 +98,7 @@ def tree_check():
 
 def symlink_repo(file):
     """Symlink the dotfiles if nothing exists in the home directory.
-    
+
     :param file: File to be symlinked
     """
 

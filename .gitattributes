@@ -1,0 +1,8 @@
+# Git Attributes
+
+[core]
+*	text=auto
+*.sh	text eol=lf
+# Is that a valid regex?
+*.jp[e]?g binary
+*.png 	binary

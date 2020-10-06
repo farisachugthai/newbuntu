@@ -53,6 +53,7 @@ fi
 add-apt-repository ppa:git-core/ppa
 apt update && apt install -y git git-man git-doc
 
+# Also worth noting ppa:jonathonf/vim-daily
 add-apt-repository ppa:jonathonf/vim
 apt update && apt install -y vim-gtk3
 
