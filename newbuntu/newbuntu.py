@@ -2,35 +2,20 @@
 # -*- coding: utf-8 -*-
 """Symlink my hard-coded dotfiles into the home directory.
 
-Depends:
-    None
-
-URL:
-    https://github.com/farisachugthai
+:URL: https://github.com/farisachugthai
 
 Params:
     Currently takes none. Git clones my specific dotfiles and puts them in
     a hard coded location. Behavior will change later.
 
-Bugs:
-    Currently non-functional.
-    The iter_source_code function  isn't utilized.
-    I believe the program is halting after realizing the directory it is
-    cloning to isn't empty; however, it's failing silently.
-
 """
 import os
 import subprocess
 import sys
-
-# Should i make an __init__.py and just put these in all?
-__author__ = 'Faris Chugthai'
-__copyright__ = 'Copyright (C) 2018 Faris Chugthai'
-__license__ = 'MIT'
-__email__ = 'farischugthai@gmail.com'
+from pathlib import Path
 
 
-def get_dotfiles():
+def get_dotfiles(proj):
     """Git clone my dotfiles and put them in a predetermined location."""
     try:
         os.chdir(proj)
@@ -72,6 +57,20 @@ def iter_source_code(tree):
             yield item
 
 
+def tree_check(REPO):
+    """Use a comprehension to validate directory existence in $HOME.
+
+    The directories in the tree where the files currently are, require a
+    mirrored setup in the user's home directory.ensure all the directories in
+    the repository are existent and writable.
+    """
+    all_dirs = [ direc for direc in os.listdir(REPO) if os.path.isdir(direc) ]
+
+    # this syntax HAS to be wrong. also does listdir return only directories or every file?
+    src_dir = ( direc for direc in os.listdir(REPO) if direc not in Path.home() )
+    os.makedirs(src_dir)
+
+
 def dir_checker(path):
     for root, dirs, files in os.walk(path):
         # Now lets do the folder check
@@ -79,8 +78,36 @@ def dir_checker(path):
             os.makedirs(root, exist_ok=False)
 
 
+def _dir_builder():
+    """
+    Going with hard coded paths and the directories I notice I
+    immediately need so that I can utilize this quickly and then
+    slowly build up a more
+    generalized script that can handle different levels of user
+    interactivity.
+    """
+    necessary_dirs = ['.bashrc.d', 'bin', '.config/nvim',
+                      'projects', '.ssh', 'src', 'virtualenvs', '.vim']
+
+    for i in necessary_dirs:
+        p = Path()
+        i = Path.joinpath(p, Path.home(), i)
+
+        if Path.is_dir(i) is False:
+            Path.mkdir(i)
+
+        # TODO: Alright all the directories have been made. Run dlink.py  {and
+        # maybe drop a link for our viewers at home?
+        # from the utilities repo and symlink all of your dotfiles in
+
+    return 0
+
+
 def symlink_repo(file):
-    ''' Symlink the dotfiles if nothing exists in the home directory. '''
+    """Symlink the dotfiles if nothing exists in the home directory.
+
+    :param file: File to be symlinked
+    """
 
     src = os.path.join(repo, file)
     dest = os.path.join(home, file)
@@ -94,9 +121,28 @@ def symlink_repo(file):
             print("Sorry but a file to {0} already exists".format(dest))
 
 
+def main():
+    """Symlink a repository pointing from relevant config directories in $HOME.
+
+    After checking the necessary directories are present in "$HOME", we begin symlinking.
+
+    We could just symlink all the files but to make things more efficient
+    and generally more interesting we're gonna use a generator to iterate
+    over all the files in the repo
+    """
+    home = Path.home()
+    PROJ = os.path.join(home, "projects")
+    get_dotfiles(PROJ)
+
+    REPO = os.path.join(proj, "dotfiles")
+    tree_check(REPO)
+    # in REPO and ensures that they exist in $HOME
+    # like i don't trust that dir_checker nonsense
+
+    for file in iter_source_code(REPO):
+        symlink_repo(file)
+
+
 if __name__ == '__main__':
     # Module level vars but keep them isolated if we source anything from here
-    home = os.path.join(os.path.expanduser("~"), "")
-    proj = os.path.join(home, "projects")
-    repo = os.path.join(proj, "dotfiles")
-    get_dotfiles()
+    main()
