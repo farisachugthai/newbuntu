@@ -9,6 +9,7 @@ Params:
     a hard coded location. Behavior will change later.
 
 """
+import logging
 import os
 import subprocess
 import sys
@@ -41,11 +42,12 @@ def iter_source_code(tree):
     """Copied this from pyflakes so I really have to say thank you to PyCQA
     for both the wonderful tools but the great source code!
 
-    :param dir: Where the dotfiles are located. Directories will be recursed
-        into and any .py files found will be yielded.  Any non-directories will
-        be yielded as-is.
-
-    :return file
+    :param tree: Where the dotfiles are located. Directories will be recursed
+                 into and any .py files found will be yielded.
+                 Any non-directories will be yielded as-is.
+    :type tree:  os.PathLike
+    :returns:    file
+    :rtype:      str
     """
     for item in tree:
         if os.path.isdir(item):
@@ -58,7 +60,7 @@ def iter_source_code(tree):
 
 
 def tree_check(REPO):
-    """Use a comprehension to validate directory existence in $HOME.
+    """Use a comprehension to validate directory existence.
 
     The directories in the tree where the files currently are, require a
     mirrored setup in the user's home directory.ensure all the directories in
@@ -73,13 +75,6 @@ def tree_check(REPO):
             os.makedirs(i)
         except FileExistsError:
             pass
-
-
-def dir_checker(path):
-    for root, dirs, files in os.walk(path):
-        # Now lets do the folder check
-        if not os.path.isdir(root):
-            os.makedirs(root, exist_ok=False)
 
 
 def _dir_builder():
@@ -99,11 +94,9 @@ def _dir_builder():
 
         if Path.is_dir(i) is False:
             Path.mkdir(i)
-
         # TODO: Alright all the directories have been made. Run dlink.py  {and
         # maybe drop a link for our viewers at home?
         # from the utilities repo and symlink all of your dotfiles in
-
     return 0
 
 
@@ -119,10 +112,9 @@ def symlink_repo(repo, file):
         os.symlink(src, dest)
     except FileExistsError:
         if os.path.islink(dest):
-            # print("Sorry but a symlink to {0} already exists".format(dest))
-            pass
+            logging.debug("Sorry but a symlink to {0} already exists".format(dest))
         elif os.path.isfile(dest):
-            print("Sorry but a file to {0} already exists".format(dest))
+            logging.warning("Sorry but a file to {0} already exists".format(dest))
 
 
 def main():
@@ -139,14 +131,13 @@ def main():
     get_dotfiles(PROJ)
 
     REPO = os.path.join(PROJ, "dotfiles")
-    tree_check(REPO)
-    # in REPO and ensures that they exist in $HOME
-    # like i don't trust that dir_checker nonsense
-
+    # Yeah so this function definitely doesn't work as intended
+    # tree_check(REPO)
     for file in iter_source_code(REPO):
         symlink_repo(REPO, file)
 
 
 if __name__ == '__main__':
     # Module level vars but keep them isolated if we source anything from here
+    logging.basicConfig(level=logging.WARNING)
     main()

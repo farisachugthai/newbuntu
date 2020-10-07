@@ -1,10 +1,11 @@
 #!/bin/bash
 # Maintainer: Faris Chugthai
+# TODO: Use the sha1sum and sha256sum commands to verify all curls
 
 set -eu
 set -o pipefail
 
-if [[ "$(command -v lsb_release)" ]]; then
+if [[ -n "$(command -v lsb_release)" ]]; then
     OS="$(lsb_release --short --id)"       # Typically outputs the single word Ubuntu, Parrot, Termux etc
 else
     OS="$(uname -o)"
@@ -29,16 +30,21 @@ else
 
     # don't know how to automate this exactly. requires the user to agree to the default settings.
     curl https://sh.rustup.rs -sSf | sh
+
+    echo -e "You now have rust! Go forth and enjoy ripgrep, faster terminals and stable toolchains!"
+    echo -e "We're going to run source $HOME/.cargo/env so that we can keep running in the same shell."
+
+    source "$HOME/.cargo/env"
+
+    # TODO: Give them options for where it goes.
+    if ! [[ -d "$HOME/.bashrc.d/" ]]; then
+        mkdir -pv "$HOME/.bashrc.d"
+    fi
     rustup completions bash >> "$HOME/.bashrc.d/rustup-completion.bash"
-    rustup override set stable
-    rustup update stable
+    # rustup override set stable
+    # rustup update stable
 
 fi
-
-echo -e "You now have rust! Go forth and enjoy ripgrep, faster terminals and stable toolchains!"
-echo -e "We're going to run source $HOME/.cargo/env so that we can keep running in the same shell."
-
-source "$HOME/.cargo/env"
 
 echo -e "Now we can install ripgrep and fd!"
 
@@ -56,8 +62,13 @@ rustup run nightly cargo install racer
 #                                Conda                                #
 #######################################################################
 
-wget -O "$HOME/miniconda.sh" "http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-`uname -m`.sh"
+# before running this wget, should we run a few checks that it doesn't already exist?
 
+# wget -O "$HOME/miniconda.sh" "http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-`uname -m`.sh"
+
+# bash "$HOME/miniconda.sh" -b -p
+# TODO: Verify this is the right command
+# bash -b -p "$HOME/miniconda3" "$HOME/miniconda.sh"
 # Genuinely can't say why this command wouldn't silently for me until i moved
 # the flags to the end of the command?
 bash "$HOME/miniconda.sh" -b -p
@@ -75,7 +86,7 @@ conda update -n base --all || echo "Conda may not have been acivated. Reopen
 
 conda activate base || exit 127
 
-conda install cheat
+conda install cheat # and everything else you want this'll be a procedure
 
 #######################################################################
 #                             JavaScript:                             #
@@ -83,6 +94,9 @@ conda install cheat
 
 
 ## This is also gonna be a conda controlled thing because it's very easy for things to get wildly out of control
+
+# Eh. Instead of doing this you could also manage nvm installations with nvm.
+# Idk.
 
 conda create -n yarn
 conda activate yarn
