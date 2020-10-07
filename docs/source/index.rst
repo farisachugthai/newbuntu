@@ -10,7 +10,11 @@ Welcome to Newbuntu's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   newbuntu/newbuntu
+   newbuntu/modules
+   todo
 
+.. thank you sphinx-apidoc!
 
 Indices and tables
 ==================

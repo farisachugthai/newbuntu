@@ -64,11 +64,15 @@ def tree_check(REPO):
     mirrored setup in the user's home directory.ensure all the directories in
     the repository are existent and writable.
     """
-    all_dirs = [ direc for direc in os.listdir(REPO) if os.path.isdir(direc) ]
+    if hasattr(REPO, '__fspath__'):
+        REPO = REPO.__fspath__()
 
-    # this syntax HAS to be wrong. also does listdir return only directories or every file?
-    src_dir = ( direc for direc in os.listdir(REPO) if direc not in Path.home() )
-    os.makedirs(src_dir)
+    src_dir = [direc for direc in os.listdir(REPO) if os.path.isdir(direc)]
+    for i in src_dir:
+        try:
+            os.makedirs(i)
+        except FileExistsError:
+            pass
 
 
 def dir_checker(path):
@@ -103,12 +107,12 @@ def _dir_builder():
     return 0
 
 
-def symlink_repo(file):
+def symlink_repo(repo, file):
     """Symlink the dotfiles if nothing exists in the home directory.
 
     :param file: File to be symlinked
     """
-
+    home = Path.home().__fspath__()
     src = os.path.join(repo, file)
     dest = os.path.join(home, file)
     try:
@@ -134,13 +138,13 @@ def main():
     PROJ = os.path.join(home, "projects")
     get_dotfiles(PROJ)
 
-    REPO = os.path.join(proj, "dotfiles")
+    REPO = os.path.join(PROJ, "dotfiles")
     tree_check(REPO)
     # in REPO and ensures that they exist in $HOME
     # like i don't trust that dir_checker nonsense
 
     for file in iter_source_code(REPO):
-        symlink_repo(file)
+        symlink_repo(REPO, file)
 
 
 if __name__ == '__main__':
